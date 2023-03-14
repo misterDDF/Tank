@@ -17,6 +17,15 @@ public class NaviTest : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        agent.SetDestination(target.position);
+        agent.isStopped = true;
+        if (Vector3.Distance(transform.position, target.position) < 10)
+        {
+
+        }
+        else
+        {
+            agent.isStopped = false;
+            agent.SetDestination(target.position);
+        }
     }
 }
