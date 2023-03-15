@@ -19,6 +19,7 @@ namespace Complete
         public GameObject TankAIChargerPrefab;
         public Transform[] AISpawnPoints;
         public Button BtnRestart;
+        public Button BtnCheat;
         public BuffRoller Roller;
 
         public int m_NumRoundsToWin = 5;            // The number of rounds a single player has to win to win the game.
@@ -76,6 +77,10 @@ namespace Complete
             {
                 StartCoroutine(GameLoop());
             });
+            BtnCheat.onClick.AddListener(() =>
+            {
+                GetPlayerGO().GetComponent<TankPlayer>().HealthPlayer.ResetHealth();
+            });
         }
 
         private void Start()
@@ -98,20 +103,22 @@ namespace Complete
         private void Update()
         {
             roundTime += Time.deltaTime;
-            if(isPlaying && roundTime > ConstDefine.ROUND_RESPAWN_TIME && wave >= ConstDefine.MAX_WAVE_COUNT)
+            if(isPlaying && roundTime > ConstDefine.ROUND_RESPAWN_TIME && wave < ConstDefine.MAX_WAVE_COUNT)
             {
                 SpawnAITank();
                 roundTime = 0;
                 wave++;
 
+                GetPlayerGO().GetComponent<TankPlayer>().HealthPlayer.ResetHealth();
                 StartCoroutine(ShowWaveTxt());
             }
-            if(isPlaying && AITankList.Count() <= 0)
+            else if(isPlaying && AITankList.Count() <= 0 && wave < ConstDefine.MAX_WAVE_COUNT)
             {
                 SpawnAITank();
                 roundTime = 0;
                 wave++;
 
+                GetPlayerGO().GetComponent<TankPlayer>().HealthPlayer.ResetHealth();
                 StartCoroutine(ShowWaveTxt());
             }
         }
@@ -125,7 +132,7 @@ namespace Complete
 
         private void SpawnAITank()
         {
-            for(int i = 0; i < 3 + (wave * 2); i++)
+            for(int i = 0; i < 1 + (wave * 2); i++)
             //for(int i = 0; i < 1; i++) 
             {
                 TankAI tank;
@@ -234,6 +241,11 @@ namespace Complete
             // As soon as the round starts reset the tanks and make sure they can't move.
             ResetAllTanks ();
             DisableTankControl ();
+            Transform buffParent = GameObject.Find("BuffParent").transform;
+            for(int i = 0; i < buffParent.childCount; i++)
+            {
+                Destroy(buffParent.GetChild(i).gameObject);
+            }
 
             // Snap the camera's zoom and position to something appropriate for the reset tanks.
             m_CameraControl.SetStartPositionAndSize ();
@@ -265,7 +277,7 @@ namespace Complete
             m_MessageText.text = string.Empty;
 
             // Íæ¼ÒËÀÍöÓÎÏ·½áÊø
-            while (!IsPlayerDead() || (wave >= ConstDefine.MAX_WAVE_COUNT && AITankList.Count() <= 0))
+            while (!IsPlayerDead() && !IsGameFinished())
             {
                 yield return null;
             }
@@ -313,6 +325,11 @@ namespace Complete
         public bool IsPlayerDead()
         {
             return !m_Tanks[0].m_Instance.activeSelf;
+        }
+
+        public bool IsGameFinished()
+        {
+            return wave >= ConstDefine.MAX_WAVE_COUNT && AITankList.Count() <= 0;
         }
 
         // This is used to check if there is one or fewer tanks remaining and thus the round should end.

@@ -40,7 +40,10 @@ public class TankPlayer : MonoBehaviour
 
             if(other.gameObject.tag == ConstDefine.TAG_AI)
             {
-                HealthPlayer.TakeDamage(other.GetComponent<TankAI>().Damage);
+                if (other.GetComponent<TankAI>())
+                {
+                    HealthPlayer.TakeDamage(other.GetComponent<TankAI>().Damage);
+                }
             }
             else if(other.gameObject.tag == ConstDefine.TAG_BUFF)
             {

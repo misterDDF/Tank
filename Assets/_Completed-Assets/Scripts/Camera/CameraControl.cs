@@ -128,7 +128,9 @@ namespace Complete
             transform.position = m_DesiredPosition;
 
             // Find and set the required size of the camera.
-            m_Camera.orthographicSize = FindRequiredSize ();
+            // m_Camera.orthographicSize = FindRequiredSize ();
+
+            m_Camera.orthographicSize = ConstDefine.CAMERA_ORTH_SIZE;
         }
     }
 }

@@ -43,6 +43,11 @@ namespace Complete
             }
         }
 
+        public void ResetHealth()
+        {
+            m_CurrentHealth = m_StartingHealth;
+            SetHealthUI();
+        }
 
         private void Awake ()
         {

@@ -16,9 +16,11 @@ namespace Complete
         public void RollBuff(Transform genTrans)
         {
             float dropRand = UnityEngine.Random.Range(0, 100);
-            if (dropRand > ConstDefine.BUFF_DROP_RATE)
+            if (dropRand < ConstDefine.BUFF_DROP_RATE)
             {
                 GameObject buffCapsuleGO = Instantiate(BuffCapsulePrefab, genTrans.position, genTrans.rotation);
+                buffCapsuleGO.transform.parent = GameObject.Find("BuffParent").transform;
+
                 float buffRand = UnityEngine.Random.Range(0, 100);
                   if (CheckInBuffange(buffRand, BuffType.Freeze))
                 {

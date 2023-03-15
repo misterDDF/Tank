@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 namespace Complete
 {
@@ -17,14 +20,16 @@ namespace Complete
         {
             base.EnterState();
             Owner.MoveAI.SetNavActive(false);
-            Owner.TriggerAI.SetTriggerActive(false);
         }
 
         public override void ProcessState()
         {
             base.ProcessState();
 
-            if(StateTime > ConstDefine.CHARGE_AWAIT_TIME)
+            Vector3 direction = GameManager.Instance.GetPlayerGO().transform.position - Owner.transform.position;
+            Quaternion toRotation = Quaternion.FromToRotation(Owner.transform.forward, direction);
+            Owner.transform.rotation = Quaternion.Lerp(Owner.transform.rotation, toRotation, Time.deltaTime);
+            if (StateTime > ConstDefine.CHARGE_AWAIT_TIME)
             {
                 TriggerTransition(TransKeyDefine.LostPlayer);
             }
@@ -33,7 +38,6 @@ namespace Complete
         public override void ExitState()
         {
             base.ExitState();
-            Owner.TriggerAI.SetTriggerActive(true);
         }
     }
 }

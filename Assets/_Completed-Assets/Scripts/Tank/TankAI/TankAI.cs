@@ -22,7 +22,7 @@ namespace Complete
         public const string FindPlayer = "FindPlayer";  // 发现玩家
         public const string LostPlayer = "LostPlayer";  // 丢失玩家
         public const string ChargeDone = "ChargeDone";  // 冲锋结束（接一段等待时间）
-        public const string PlayerDead = "PlayerDead";  // 玩家已阵亡 
+        public const string PlayerDead = "PlayerDead";  // 玩家已阵亡
     }
 
     public class TankAI : MonoBehaviour

@@ -23,6 +23,7 @@ namespace Complete
             Owner.MoveAI.SetNavSpeed(ConstDefine.NAV_SPEED_CHARGE, ConstDefine.NAV_ACCE_CHARGE);
             Owner.Dummy.transform.position = GameManager.Instance.GetPlayerGO().transform.position;
             target = Owner.Dummy.transform;
+            target.position = target.position + Vector3.Normalize(target.transform.position - Owner.transform.position) * 15;
 
             Debug.Log("AI坦克 " + Owner.InstanceId + " 号进入冲锋状态");
         }
@@ -33,7 +34,7 @@ namespace Complete
 
             // 进状态瞄准当前瞬间的玩家位置创过去，然后进入等待状态
             Owner.MoveAI.SetNavTarget(target);
-            if(Vector3.Distance(Owner.transform.position, target.position) < 1)
+            if(Vector3.Distance(Owner.transform.position, target.position) < 1 || StateTime > ConstDefine.CHARGE_MAX_TIME)
             {
                 TriggerTransition(TransKeyDefine.ChargeDone);
             }

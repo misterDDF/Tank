@@ -55,6 +55,10 @@ namespace Complete
                 {
                     continue;
                 }
+                if(!IsFromAI && targetHealth.GetComponent<TankPlayer>())
+                {
+                    continue;
+                }
                 targetHealth.TakeDamage (damage);
             }
 
