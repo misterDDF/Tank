@@ -25,12 +25,12 @@ namespace Complete
         private void FixedUpdate ()
         {
             // Move the camera towards a desired position.
-            Move ();
+            // Move ();
 
             // Change the size of the camera based.
-            Zoom ();
+            // Zoom ();
 
-            //m_Camera.transform.LookAt(m_Targets[0].transform.position);
+            m_Camera.transform.LookAt(GameManager.Instance.GetPlayerGO().transform.position);
         }
 
 

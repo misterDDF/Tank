@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
+using UnityEngine;
 
 namespace Complete
 {
@@ -17,6 +19,13 @@ namespace Complete
 
             this.CurState = StateDict[StateDefine.Patrol];
             this.CurState.EnterState();
+        }
+
+        public override void Dispose()
+        {
+            base.Dispose();
+
+            TankPool<TankAISpitter>.PushTank(this);
         }
 
         private void BuildStates()
@@ -37,6 +46,7 @@ namespace Complete
 
             // 接敌状态转移条件定义
             StateDict[StateDefine.Engage].RegisterTransistion(TransKeyDefine.LostPlayer, StateDict[StateDefine.Search]);
+            StateDict[StateDefine.Engage].RegisterTransistion(TransKeyDefine.PlayerDead, StateDict[StateDefine.Patrol]);
         }
     }
 }

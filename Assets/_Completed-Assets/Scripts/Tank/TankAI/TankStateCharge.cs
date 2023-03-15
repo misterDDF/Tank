@@ -24,7 +24,7 @@ namespace Complete
             Owner.Dummy.transform.position = GameManager.Instance.GetPlayerGO().transform.position;
             target = Owner.Dummy.transform;
 
-            Debug.Log("AI坦克进入冲锋状态");
+            Debug.Log("AI坦克 " + Owner.InstanceId + " 号进入冲锋状态");
         }
 
         public override void ProcessState()
@@ -43,8 +43,9 @@ namespace Complete
         {
             base.ExitState();
             Owner.MoveAI.SetNavSpeed(ConstDefine.NAV_SPEED_INIT, ConstDefine.NAV_ACCE_INIT);
+            target = null;
 
-            Debug.Log("AI坦克离开冲锋状态");
+            Debug.Log("AI坦克 " + Owner.InstanceId + " 号离开冲锋状态");
         }
     }
 }

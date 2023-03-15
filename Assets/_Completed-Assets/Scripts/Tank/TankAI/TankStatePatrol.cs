@@ -22,7 +22,7 @@ namespace Complete
             target = Owner.GetRandomPatrolTransform();
             Owner.MoveAI.SetNavTarget(target);
 
-            Debug.Log("AI坦克进入巡逻状态");
+            Debug.Log("AI坦克 " + Owner.InstanceId + " 号进入巡逻状态");
         }
 
         public override void ProcessState()
@@ -34,22 +34,23 @@ namespace Complete
                 target = Owner.GetRandomPatrolTransform();
                 Owner.MoveAI.SetNavTarget(target);
 
-                Debug.Log("到达预定巡逻点，向下一个随机巡逻点移动");
+                Debug.Log("AI坦克 " + Owner.InstanceId + " 号到达预定巡逻点，向下一个随机巡逻点移动");
             }
 
             // 距离玩家够近时进入搜索状态
-            if(Vector3.Distance(Owner.transform.position, GameManager.Instance.GetPlayerGO().transform.position) < 30)
+            if (!GameManager.Instance.GetPlayerGO().GetComponent<TankHealth>().Dead && 
+                Vector3.Distance(Owner.transform.position, GameManager.Instance.GetPlayerGO().transform.position) < 30)
             {
                 TriggerTransition(TransKeyDefine.InspectPlayer);
 
-                Debug.Log("玩家在附近，进入搜索状态");
+                Debug.Log("玩家在附近， AI坦克" + Owner.InstanceId + " 号进入搜索状态");
             }
         }
 
         public override void ExitState()
         {
             base.ExitState();
-            Debug.Log("AI坦克离开巡逻状态");
+            Debug.Log("AI坦克 " + Owner.InstanceId + " 号离开巡逻状态");
         }
     }
 }

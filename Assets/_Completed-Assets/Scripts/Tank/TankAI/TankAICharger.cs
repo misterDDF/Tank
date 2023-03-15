@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UnityEngine;
 
 namespace Complete
 {
@@ -17,6 +18,13 @@ namespace Complete
 
             this.CurState = StateDict[StateDefine.Patrol];
             this.CurState.EnterState();
+        }
+
+        public override void Dispose()
+        {
+            base.Dispose();
+
+            TankPool<TankAICharger>.PushTank(this);
         }
 
         private void BuildStates()

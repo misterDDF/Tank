@@ -4,6 +4,9 @@ namespace Complete
 {
     public class ShellExplosion : MonoBehaviour
     {
+        public bool IsFromAI = false;
+        public float Damage = 1f;
+
         public LayerMask m_TankMask;                        // Used to filter what the explosion affects, this should be set to "Players".
         public ParticleSystem m_ExplosionParticles;         // Reference to the particles that will play on explosion.
         public AudioSource m_ExplosionAudio;                // Reference to the audio that will play on explosion.
@@ -36,7 +39,7 @@ namespace Complete
                     continue;
 
                 // Add an explosion force.
-                targetRigidbody.AddExplosionForce (m_ExplosionForce, transform.position, m_ExplosionRadius);
+                // targetRigidbody.AddExplosionForce (m_ExplosionForce, transform.position, m_ExplosionRadius);
 
                 // Find the TankHealth script associated with the rigidbody.
                 TankHealth targetHealth = targetRigidbody.GetComponent<TankHealth> ();
@@ -46,9 +49,12 @@ namespace Complete
                     continue;
 
                 // Calculate the amount of damage the target should take based on it's distance from the shell.
-                float damage = CalculateDamage (targetRigidbody.position);
-
-                // Deal this damage to the tank.
+                // float damage = CalculateDamage (targetRigidbody.position);
+                float damage = Damage;
+                if(IsFromAI && targetHealth.GetComponent<TankAI>())
+                {
+                    continue;
+                }
                 targetHealth.TakeDamage (damage);
             }
 

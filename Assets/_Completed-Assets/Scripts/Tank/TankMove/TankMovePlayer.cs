@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TankMovePlayer : TankMove
+public class TankMovePlayer : MonoBehaviour
 {
     public float m_Speed = 12f;                 // How fast the tank moves forward and back.
     public float m_TurnSpeed = 180f;            // How fast the tank turns in degrees per second.
@@ -17,17 +17,15 @@ public class TankMovePlayer : TankMove
     private float m_OriginalPitch;              // The pitch of the audio source at the start of the scene.
     private ParticleSystem[] m_particleSystems; // References to all the particles systems used by the Tanks
 
-    protected override void _Awake()
+    private void Awake()
     {
-        base._Awake();
         m_Rigidbody = GetComponent<Rigidbody>();
     }
 
-    protected override void _OnEnable()
+    private void OnEnable()
     {
-        base._OnEnable();
         // When the tank is turned on, make sure it's not kinematic.
-        m_Rigidbody.isKinematic = false;
+        m_Rigidbody.isKinematic = true;
 
         // Also reset the input values.
         m_MovementInputValue = 0f;
@@ -43,16 +41,14 @@ public class TankMovePlayer : TankMove
         }
     }
 
-    protected override void _Start()
+    private void Start()
     {
-        base._Start();
         // Store the original pitch of the audio source.
         m_OriginalPitch = m_MovementAudio.pitch;
     }
 
-    protected override void _Update()
+    private void Update()
     {
-        base._Update();
         // Store the value of both input axes.
         m_MovementInputValue = Input.GetAxis("Vertical1");
         m_TurnInputValue = Input.GetAxis("Horizontal1");
@@ -60,9 +56,8 @@ public class TankMovePlayer : TankMove
         EngineAudio();
     }
 
-    protected override void _FixedUpdate()
+    private void FixedUpdate()
     {
-        base._FixedUpdate();
         Move();
         Turn();
     }

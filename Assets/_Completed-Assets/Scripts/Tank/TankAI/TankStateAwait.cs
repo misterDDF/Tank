@@ -17,6 +17,7 @@ namespace Complete
         {
             base.EnterState();
             Owner.MoveAI.SetNavActive(false);
+            Owner.TriggerAI.SetTriggerActive(false);
         }
 
         public override void ProcessState()
@@ -32,6 +33,7 @@ namespace Complete
         public override void ExitState()
         {
             base.ExitState();
+            Owner.TriggerAI.SetTriggerActive(true);
         }
     }
 }
