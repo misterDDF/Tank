@@ -27,6 +27,12 @@ namespace Complete
         public override void ProcessState()
         {
             base.ProcessState();
+            if (GameManager.Instance.IsPlayerDead())
+            {
+                TriggerTransition(TransKeyDefine.PlayerDead);
+                return;
+            }
+
             target = GameManager.Instance.GetPlayerGO().transform;
             Owner.MoveAI.SetNavTarget(target);
             // 距离足够近且两车中间无障碍物时进入接敌状态
@@ -37,9 +43,8 @@ namespace Complete
                 Owner.MoveAI.SetNavActive(false);
                 TriggerTransition(TransKeyDefine.FindPlayer);
             }
-
             // 搜索时间过长则转回巡逻状态
-            if(StateTime >= 10)
+            else if(StateTime >= 10)
             {
                 TriggerTransition(TransKeyDefine.LostPlayer);
             }

@@ -24,7 +24,7 @@ namespace Complete
         public const float AI_SHOOT_DISTANCE = 20f; // AI判定玩家仍在射击范围内的最大距离
 
         public const float ROUND_RESPAWN_TIME = 30f;    // 下一波AI重生时间
-        public const int MAX_WAVE_COUNT = 5;    // 波次数上限
+        public const int MAX_WAVE_COUNT = 2;    // 波次数上限
 
         public const float DAMAGE_AI_BASE = 1f; // AI基础伤害
         public const float DAMAGE_AI_ADD = 1f;  // AI每波增强伤害

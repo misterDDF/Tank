@@ -43,6 +43,7 @@ namespace Complete
             // 搜索状态转移条件定义
             StateDict[StateDefine.Search].RegisterTransistion(TransKeyDefine.FindPlayer, StateDict[StateDefine.Charge]);
             StateDict[StateDefine.Search].RegisterTransistion(TransKeyDefine.LostPlayer, StateDict[StateDefine.Patrol]);
+            // StateDict[StateDefine.Search].RegisterTransistion(TransKeyDefine.PlayerDead, StateDict[StateDefine.Patrol]);
 
             // 冲锋状态转移条件定义
             StateDict[StateDefine.Charge].RegisterTransistion(TransKeyDefine.ChargeDone, StateDict[StateDefine.Await]);
